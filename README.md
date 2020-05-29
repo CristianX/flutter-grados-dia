@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+## Dependencias
+* Flutter Map `flutter_map:`
+* LatLong `latlong:`
+* Peticiones http `http:`
+* Provider `provider:`
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
