@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-// Service
-import 'package:grados_dia_app/src/services/cultivos_services.dart';
+// Services
+// import 'package:grados_dia_app/src/services/cultivos_services.dart';
+import 'package:grados_dia_app/src/services/hectarea_service.dart';
 
 // Provider
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => new  CultivoService())
+        ChangeNotifierProvider(create: (_) => new HectareaService())
+        // ChangeNotifierProvider(create: (_) => new  CultivoService())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

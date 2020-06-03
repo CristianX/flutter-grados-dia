@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:grados_dia_app/src/models/cultivo_model.dart';
 import 'package:latlong/latlong.dart';
 
+// Models
+import 'package:grados_dia_app/src/models/hectarea_model.dart';
 
-class MapaCultivo extends StatelessWidget {
 
-  final List<Cultivo> cultivos;
+class MapaHectarea extends StatelessWidget {
 
-  const MapaCultivo(this.cultivos);
+  final List<Hectarea> hectareas;
+
+  const MapaHectarea(this.hectareas);
 
   @override
   Widget build(BuildContext context) {
 
     var markers = <Marker>[];
 
-    this.cultivos.forEach((cultivo) {
-      if( cultivo.hectarea != null ) {
+    this.hectareas.forEach((hectarea) {
         markers.add(
           new Marker(
             width: 80.0,
             height: 80.0,
-            point: new LatLng(cultivo.hectarea.latitud, cultivo.hectarea.longitud),
+            point: new LatLng(hectarea.latitud, hectarea.longitud),
             builder: (ctx) =>
             new Container(
-              child: Icon( Icons.room, size: 80, )
+              child: Icon( Icons.room, size: 80, color: Color.fromRGBO(76, 175, 80, 1.0) )
             ),
           )
         ); 
             
         // points.add(new LatLng( cultivo.hectarea.latitud , cultivo.hectarea.longitud));
-      }
+
     });
 
 
