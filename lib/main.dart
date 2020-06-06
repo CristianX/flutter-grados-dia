@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 // Vistas
 import 'package:grados_dia_app/src/pages/login_page.dart';
 import 'package:grados_dia_app/src/pages/home_page.dart';
+import 'package:grados_dia_app/src/pages/hectareas_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         initialRoute: 'home',
         routes: {
           'login' : ( BuildContext context ) => LoginPage(),
-          'home'  : ( BuildContext context ) => HomePage()
+          'home'  : ( BuildContext context ) => HomePage(),
+          'hectareas'  : ( BuildContext context ) => HectareasPage()
         },
 
         theme: ThemeData(

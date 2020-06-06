@@ -38,8 +38,8 @@ class MapaHectarea extends StatelessWidget {
 
       return new FlutterMap(
       options: new MapOptions(
-        center: new LatLng(-0.9226977815149553, -78.61242028610867),
-        zoom: 13.0,
+        center: new LatLng(-0.771949, -78.598254),
+        zoom: 7.0,
       ),
       layers: [
         new TileLayerOptions(
