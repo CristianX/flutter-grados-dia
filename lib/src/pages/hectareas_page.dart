@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
+
+// Services
+import 'package:grados_dia_app/src/services/hacienda_service.dart';
+
+
+// TODO: cambiar hectareaService por haciendaService para el llamado de hacienda al dropDown
+
+String _opcionSelccionada;
+
+Position _posicionActual;
 
 class HectareasPage extends StatelessWidget {
+  
+
   @override
   Widget build(BuildContext context) {
+
+    final haciendaService = Provider.of<HaciendaService>(context);
+
+    // Validación si no existe hacienda
+    if( haciendaService.haciendas.isNotEmpty ) {
+      _opcionSelccionada = haciendaService.haciendas[0].id;
+    } else {
+      _opcionSelccionada = 'Ninguna hacienda en existencia';
+    }
+
     return Scaffold(
 
       appBar: AppBar(
@@ -13,6 +37,7 @@ class HectareasPage extends StatelessWidget {
       ),
 
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Container(
           padding: EdgeInsets.symmetric( horizontal: 10 ),
           margin: EdgeInsets.only( top: 50 ),
@@ -23,7 +48,7 @@ class HectareasPage extends StatelessWidget {
                 SizedBox( height: 50 ),
                 _Ubicacion(),
                 SizedBox( height: 50 ),
-                _Hacienda()
+                _Hacienda( haciendaService.haciendas )
               ],
             ),
           ),
@@ -68,6 +93,11 @@ class _CrearNombre extends StatelessWidget {
 }
 
 class _Ubicacion extends StatelessWidget {
+
+  // Para rellenar los campos de texto de latitud y longitud
+  TextEditingController _latitudController = new TextEditingController();
+  TextEditingController _longitudController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -76,8 +106,10 @@ class _Ubicacion extends StatelessWidget {
         SizedBox( width: 17 ),
         Flexible(
           child: TextFormField(
+            controller: _latitudController,
             enabled: false,
             keyboardType: TextInputType.number,
+            
             // TODO: implementar onSaved
             decoration: InputDecoration(
               labelText: 'Latitud',
@@ -89,6 +121,7 @@ class _Ubicacion extends StatelessWidget {
         ),
         Flexible(
           child: TextFormField(
+            controller: _longitudController,
             enabled: false,
             keyboardType: TextInputType.number,
             // TODO: implementar onSaved
@@ -103,7 +136,11 @@ class _Ubicacion extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.my_location),
           color: Theme.of(context).primaryColor,
-          onPressed: (){},
+          onPressed: () async {
+            _posicionActual = await Geolocator().getCurrentPosition( desiredAccuracy: LocationAccuracy.high );
+            _latitudController.text = _posicionActual.latitude.toString();
+            _longitudController.text = _posicionActual.longitude.toString();
+          },
         ),
         IconButton(
           icon: Icon(Icons.not_listed_location),
@@ -115,9 +152,47 @@ class _Ubicacion extends StatelessWidget {
   }
 }
 
-class _Hacienda extends StatelessWidget {
+class _Hacienda extends StatefulWidget {
+
+  final List<Hacienda> haciendas;
+
+  const _Hacienda( this.haciendas );
+
+  @override
+  __HaciendaState createState() => __HaciendaState();
+}
+
+class __HaciendaState extends State<_Hacienda> {
+  List<DropdownMenuItem<String>> getHaciendas(){
+
+    List<DropdownMenuItem<String>> listaHaciendas = new List();
+
+    // Validación si no existe hacienda
+    if( this.widget.haciendas.isNotEmpty ){
+
+      this.widget.haciendas.forEach((hacienda) {
+        listaHaciendas.add(DropdownMenuItem(
+          child: Text( hacienda.nombre ),
+          value: hacienda.id,
+        ));
+      });
+    }
+    else {
+      listaHaciendas.add(DropdownMenuItem(
+        child: Text('Ninguna hacienda en existencia'),
+        value: 'Ninguna hacienda en existencia',
+      ));
+    }
+
+
+    return listaHaciendas;
+
+  } 
+
   @override
   Widget build(BuildContext context) {
+
+    
 
     // TODO: Llamar lista de haciendas
 
@@ -129,7 +204,13 @@ class _Hacienda extends StatelessWidget {
         SizedBox( width: 17 ),
         Expanded(
           child: DropdownButton(
-            value: ['Seleccione una hacienda'],
+            items: getHaciendas(),
+            value: _opcionSelccionada,
+            onChanged: (opt) {
+              setState(() {
+                _opcionSelccionada = opt;
+              });
+            },
             // items: ,
           ),
         )

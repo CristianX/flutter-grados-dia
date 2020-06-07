@@ -7,6 +7,7 @@ A new Flutter project.
 * LatLong `latlong:`
 * Peticiones http `http:`
 * Provider `provider:`
+* GeoLocator `geolocator:`
 
 ## Getting Started
 

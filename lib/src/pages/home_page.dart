@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
       body: MapaHectarea( hectareaService.hectareas ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon( Icons.people ), title: Text('Inicio')),
+          BottomNavigationBarItem(icon: Icon( Icons.spa ), title: Text('Plantaciones')),
           BottomNavigationBarItem(icon: Icon( Icons.people ), title: Text('Inicio')),
         ],
       ),

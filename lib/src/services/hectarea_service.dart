@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 // Modelos
 import 'package:grados_dia_app/src/models/hectarea_model.dart';
+export 'package:grados_dia_app/src/models/hectarea_model.dart';
 
 
 
