@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // Http
@@ -31,6 +33,20 @@ class HectareaService with ChangeNotifier{
     this.hectareas.addAll( hectareasResp.hectarea );
 
     notifyListeners();
+
+  }
+
+  postHectarea( Hectarea hectarea ) async {
+
+    final resp = await http.post(_url, body: hectarea.toJson());
+
+    final decodeData = json.decode( resp.body );
+
+    print(decodeData);
+
+    notifyListeners();
+
+    return true;
 
   }
 

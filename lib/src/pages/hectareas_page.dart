@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 // Services
 import 'package:grados_dia_app/src/services/hacienda_service.dart';
+import 'package:grados_dia_app/src/models/cultivo_model.dart';
 
 
 // TODO: cambiar hectareaService por haciendaService para el llamado de hacienda al dropDown
@@ -12,9 +13,18 @@ String _opcionSelccionada;
 
 Position _posicionActual;
 
-class HectareasPage extends StatelessWidget {
+final formKey = GlobalKey<FormState>();
+
+Hectarea hectarea = Hectarea();
+
+class HectareasPage extends StatefulWidget {
   
 
+  @override
+  _HectareasPageState createState() => _HectareasPageState();
+}
+
+class _HectareasPageState extends State<HectareasPage> {
   @override
   Widget build(BuildContext context) {
 
@@ -42,6 +52,7 @@ class HectareasPage extends StatelessWidget {
           padding: EdgeInsets.symmetric( horizontal: 10 ),
           margin: EdgeInsets.only( top: 50 ),
           child: Form(
+            key: formKey,
             child: Column(
               children: <Widget>[
                 _CrearNombre(),
@@ -59,26 +70,48 @@ class HectareasPage extends StatelessWidget {
   }
 }
 
-class _CreandoFloatingActionButton extends StatelessWidget {
+class _CreandoFloatingActionButton extends StatefulWidget {
+  @override
+  __CreandoFloatingActionButtonState createState() => __CreandoFloatingActionButtonState();
+}
+
+class __CreandoFloatingActionButtonState extends State<_CreandoFloatingActionButton> {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
 
       child: Icon(Icons.save),
       backgroundColor: Theme.of(context).primaryColor,
-      onPressed: (){},
+      onPressed: _submit,
 
 
     );
   }
+
+  void _submit() {
+    // Validando formulario
+    if(!formKey.currentState.validate()) return;
+
+    formKey.currentState.save();
+
+    print( hectarea.nombre );
+
+
+  }
+
 }
 
-class _CrearNombre extends StatelessWidget {
+class _CrearNombre extends StatefulWidget {
+  @override
+  __CrearNombreState createState() => __CrearNombreState();
+}
+
+class __CrearNombreState extends State<_CrearNombre> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.text,
-      // onSaved: (value) => hectarea.nombre = value,
+      onSaved: (value) => hectarea.nombre = value,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: 'Descripción de la platación',
@@ -87,15 +120,29 @@ class _CrearNombre extends StatelessWidget {
           borderRadius: BorderRadius.circular(20)
         )
       ),
+      // Validación
+      validator: ( value ) {
+        if( value.length < 3 ) {
+          return 'Ingrese la descripción de la plantación';
+        } else {
+          return null;
+        }
+      },
       
     );
   }
 }
 
-class _Ubicacion extends StatelessWidget {
+class _Ubicacion extends StatefulWidget {
 
   // Para rellenar los campos de texto de latitud y longitud
+  @override
+  __UbicacionState createState() => __UbicacionState();
+}
+
+class __UbicacionState extends State<_Ubicacion> {
   TextEditingController _latitudController = new TextEditingController();
+
   TextEditingController _longitudController = new TextEditingController();
 
   @override
@@ -110,13 +157,20 @@ class _Ubicacion extends StatelessWidget {
             enabled: false,
             keyboardType: TextInputType.number,
             
-            // TODO: implementar onSaved
+            onSaved: (value) => hectarea.latitud =  double.parse(value),
             decoration: InputDecoration(
               labelText: 'Latitud',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20)
               )
             ),
+            validator: ( value ) {
+              if( value.isEmpty ) {
+                return 'Necesario';
+              } else {
+                return null;
+              }
+            },
           ),
         ),
         Flexible(
@@ -124,13 +178,21 @@ class _Ubicacion extends StatelessWidget {
             controller: _longitudController,
             enabled: false,
             keyboardType: TextInputType.number,
-            // TODO: implementar onSaved
+            onSaved: (value) => hectarea.longitud =  double.parse(value),
             decoration: InputDecoration(
               labelText: 'Longitud',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20)
               )
             ),
+            // Validación
+            validator: ( value ) {
+              if( value.isEmpty ) {
+                return 'Necesario';
+              } else {
+                return null;
+              }
+            },
           ),
         ),
         IconButton(
@@ -192,9 +254,6 @@ class __HaciendaState extends State<_Hacienda> {
   @override
   Widget build(BuildContext context) {
 
-    
-
-    // TODO: Llamar lista de haciendas
 
     return Row(
 

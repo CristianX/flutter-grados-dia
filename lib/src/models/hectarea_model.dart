@@ -59,7 +59,7 @@ class Hectarea {
         "nombre": nombre,
         "latitud": latitud,
         "longitud": longitud,
-        "hacienda": hacienda.toJson(),
+        "hacienda": hacienda.id,
         "__v": v,
     };
 }
