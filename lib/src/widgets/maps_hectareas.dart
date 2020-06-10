@@ -58,11 +58,11 @@ class MapaHectarea extends StatelessWidget {
           },
         ),
         new MarkerClusterLayerOptions(
-          maxClusterRadius: 120,
-          size: Size(40, 40),
-          fitBoundsOptions: FitBoundsOptions(
-            padding: EdgeInsets.all(50)
-          ),
+          // maxClusterRadius: 120,
+          // size: Size(40, 40),
+          // fitBoundsOptions: FitBoundsOptions(
+          //   padding: EdgeInsets.all(50)
+          // ),
           markers: markers,
           
           popupOptions: PopupOptions(

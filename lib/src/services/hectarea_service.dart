@@ -36,15 +36,22 @@ class HectareaService with ChangeNotifier{
 
   }
 
-  postHectarea( Hectarea hectarea ) async {
+  postHectarea( Hectarea hectarea, String idHacienda ) async {
 
-    final resp = await http.post(_url, body: hectarea.toJson());
+    final resp = await http.post(_url, body: <String, String>{
+      'nombre': hectarea.nombre,
+      'latitud': hectarea.latitud.toString(),
+      'longitud': hectarea.longitud.toString(),
+      'hacienda': idHacienda
+    });
 
-    final decodeData = json.decode( resp.body );
+    // final decodeData = json.decode( resp.body );
 
-    print(decodeData);
+    // print(decodeData);
 
-    notifyListeners();
+    // notifyListeners();
+
+    getHectareas();
 
     return true;
 

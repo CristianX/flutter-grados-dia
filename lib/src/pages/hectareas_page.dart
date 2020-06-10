@@ -3,8 +3,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 // Services
-import 'package:grados_dia_app/src/services/hacienda_service.dart';
-import 'package:grados_dia_app/src/models/cultivo_model.dart';
+import 'package:grados_dia_app/src/services/hacienda_service.dart' as providerHacienda;
+import 'package:grados_dia_app/src/services/hectarea_service.dart';
 
 
 // TODO: cambiar hectareaService por haciendaService para el llamado de hacienda al dropDown
@@ -28,7 +28,7 @@ class _HectareasPageState extends State<HectareasPage> {
   @override
   Widget build(BuildContext context) {
 
-    final haciendaService = Provider.of<HaciendaService>(context);
+    final haciendaService = Provider.of<providerHacienda.HaciendaService>(context);
 
     // Validación si no existe hacienda
     if( haciendaService.haciendas.isNotEmpty ) {
@@ -78,23 +78,28 @@ class _CreandoFloatingActionButton extends StatefulWidget {
 class __CreandoFloatingActionButtonState extends State<_CreandoFloatingActionButton> {
   @override
   Widget build(BuildContext context) {
+    final hectareaService = Provider.of<HectareaService>(context);
+
     return FloatingActionButton(
 
       child: Icon(Icons.save),
       backgroundColor: Theme.of(context).primaryColor,
-      onPressed: _submit,
+      onPressed: () => _submit( hectareaService ),
 
 
     );
   }
 
-  void _submit() {
+  void _submit( HectareaService hectareaService ) {
     // Validando formulario
     if(!formKey.currentState.validate()) return;
 
     formKey.currentState.save();
 
-    print( hectarea.nombre );
+    // Opción seleccionada es el ide de la hacienda
+    hectareaService.postHectarea(hectarea, _opcionSelccionada);
+
+    
 
 
   }
@@ -216,7 +221,7 @@ class __UbicacionState extends State<_Ubicacion> {
 
 class _Hacienda extends StatefulWidget {
 
-  final List<Hacienda> haciendas;
+  final List<providerHacienda.Hacienda> haciendas;
 
   const _Hacienda( this.haciendas );
 
