@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong/latlong.dart';
 
 // Models
 import 'package:grados_dia_app/src/models/hectarea_model.dart';
 
-final PopupController _popupController = new PopupController();
 
 
 class MapaHectarea extends StatelessWidget {
@@ -42,11 +40,7 @@ class MapaHectarea extends StatelessWidget {
       options: new MapOptions(
         center: new LatLng(-0.771949, -78.598254),
         zoom: 7.0,
-        plugins: [
-          MarkerClusterPlugin()
-        ],
         // Esconder popup al dar click en cualquier punto del mapa
-        onTap: (_) => _popupController.hidePopup()
       ),
       layers: [
         new TileLayerOptions(
@@ -57,39 +51,7 @@ class MapaHectarea extends StatelessWidget {
             'id': 'mapbox.satellite',
           },
         ),
-        new MarkerClusterLayerOptions(
-          // maxClusterRadius: 120,
-          // size: Size(40, 40),
-          // fitBoundsOptions: FitBoundsOptions(
-          //   padding: EdgeInsets.all(50)
-          // ),
-          markers: markers,
-          
-          popupOptions: PopupOptions(
-            
-            popupSnap: PopupSnap.top,
-            popupController: _popupController,
-            popupBuilder: ( _, marker ) => Container(
-              width: 200,
-              height: 100,
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  Text(nombreHectarea(marker)),
-                  Text('Latitud: ${marker.point.latitude}'),
-                  Text('Longitud: ${marker.point.longitude}'),
-                  // RaisedButton.icon(onPressed: (){}, icon: Icon(Icons.save), label: Text('Guardar'))
-                ],
-              )
-            ),
-          ),
-          builder: (context, markers) {
-            return FloatingActionButton(
-              child: Text(markers.length.toString()),
-              onPressed: null,
-            );
-          },
-        ),
+        new MarkerLayerOptions( markers: markers )
       ],
     );
   }

@@ -38,8 +38,6 @@ dependencies:
   provider:
   # Geolocator
   geolocator:
-  # Flutter Map Marker Cluster
-  flutter_map_marker_cluster:
 
 dev_dependencies:
   flutter_test:

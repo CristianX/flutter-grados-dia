@@ -8,7 +8,6 @@ A new Flutter project.
 * Peticiones http `http:`
 * Provider `provider:`
 * GeoLocator `geolocator:`
-* Plugin Flutter Map Marker Cluster: `flutter_map_marker_cluster:`
 
 ## Getting Started
 
