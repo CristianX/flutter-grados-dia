@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^0.1.3
   # Flutter Map
   flutter_map:
+  # Flutter Marker Cluster
+  flutter_map_marker_cluster:
   # LatLng
   latlong:
   # Peticiones Http

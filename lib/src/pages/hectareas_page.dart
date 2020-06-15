@@ -99,6 +99,8 @@ class __CreandoFloatingActionButtonState extends State<_CreandoFloatingActionBut
     // Opción seleccionada es el ide de la hacienda
     hectareaService.postHectarea(hectarea, _opcionSelccionada);
 
+    Navigator.pop(context);
+
     
 
 
