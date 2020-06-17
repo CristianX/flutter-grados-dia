@@ -2,18 +2,44 @@ import 'package:flutter/material.dart';
 
 
 import 'package:grados_dia_app/src/models/menu_model.dart';
+import 'package:grados_dia_app/src/pages/clima/listar_clima_page.dart';
+import 'package:grados_dia_app/src/pages/control/listar_control_page.dart';
+import 'package:grados_dia_app/src/pages/cultivo/listar_cultivos_page.dart';
+import 'package:grados_dia_app/src/pages/hacienda/listar_haciendas_page.dart';
+import 'package:grados_dia_app/src/pages/usuario/listar_usuarios_page.dart';
+import 'package:grados_dia_app/src/services/navegacion_floating_service.dart';
 import 'package:grados_dia_app/src/utils/utils.dart' as utils ;
+import 'package:provider/provider.dart';
 
-class MenuPage extends StatelessWidget {
+// TODO: Crear un provider para Navigation.pop del floatingActionButton
+
+
+class MenuPage extends StatefulWidget {
+  @override
+  _MenuPageState createState() => _MenuPageState();
+}
+
+class _MenuPageState extends State<MenuPage> {
+
+  String seleccion = 'hacienda';
+
   @override
   Widget build(BuildContext context) {
+
+    
+
+    final menu = utils.MenuItems().menu;
+
+
     return SafeArea(
 
       child: Scaffold(
 
         body: Column(
           children: <Widget>[
-            _ListaMenu()
+            _listaMenu( menu ),
+            SizedBox( height: 10 ),
+            _cargarPagina(seleccion)
           ],
         ),
 
@@ -24,14 +50,8 @@ class MenuPage extends StatelessWidget {
       
     );
   }
-}
 
-class _ListaMenu extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    final menu = utils.MenuItems().menu;
-
+  Widget _listaMenu( List<Menu> menu ) {
     return Container(
 
       width: double.infinity,
@@ -50,10 +70,10 @@ class _ListaMenu extends StatelessWidget {
             child: Column(
               children: <Widget>[
 
-                _MenuBoton( menu[index] ),
+                _menuBoton( menu[index] ),
                 SizedBox( height: 5 ),
                 // Capitalizando nombre del menú
-                Text( '${ nombreMenu[0].toUpperCase() }${ nombreMenu.substring(1) }' )
+                Text( '${ nombreMenu[0].toUpperCase() }${ nombreMenu.substring(1) }', style: TextStyle( color: ( seleccion == menu[index].nombre ) ? Theme.of(context).primaryColor : Colors.black54 ) )
 
               ],
             ),
@@ -63,21 +83,17 @@ class _ListaMenu extends StatelessWidget {
       
     );
   }
-}
 
-class _MenuBoton extends StatelessWidget {
-
-  final Menu menu;
-
-  const _MenuBoton( this.menu );
-
-  @override
-  Widget build(BuildContext context) {
-
+  Widget _menuBoton(Menu menu) {
     return GestureDetector(
 
       onTap: (){
-         print( menu.nombre );
+
+        setState(() {
+          seleccion = menu.nombre;
+        });
+
+         
       },
 
       child: Container(
@@ -87,17 +103,42 @@ class _MenuBoton extends StatelessWidget {
         margin: EdgeInsets.symmetric( horizontal: 10 ),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white
+          color: Colors.grey[200]
         ),
 
         child: Icon(
-          // TODO cambiar los items del menu a un provider para redibujar el color seleccionado
           menu.icono,
-          color: ( Theme.of(context).primaryColor ),
+          color: ( seleccion == menu.nombre ) ? Theme.of(context).primaryColor : Colors.black54,
         ),
         
       ),
       
     );
   }
+
+  Widget _cargarPagina( String seleccion ) {
+
+    final navegacionFloatingService = Provider.of<NavegacionFloatingService>(context);
+
+    switch ( seleccion ) {
+
+      case 'hacienda' : {
+        navegacionFloatingService.menuSeleccionado = 'login';
+      } 
+      return ListarHaciendasPage();
+      case 'cultivo'  : return ListarCultivosPage();
+      case 'control'  : return ListarControlPage();
+      case 'usuario'  : return ListarUsuariosPage();
+      case 'clima'    : return ListarClimaPage();
+
+      default: return ListarHaciendasPage();
+
+
+    }
+
+  }
+
 }
+
+
+

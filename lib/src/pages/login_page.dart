@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// TODO: cambiar color a white12 para evitar conflicto de color con el ScrollView
+
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
