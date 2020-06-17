@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:grados_dia_app/src/pages/login_page.dart';
 import 'package:grados_dia_app/src/pages/home_page.dart';
 import 'package:grados_dia_app/src/pages/hectareas_page.dart';
+import 'package:grados_dia_app/src/pages/mapa_page.dart';
+import 'package:grados_dia_app/src/pages/menu_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -28,9 +30,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: 'home',
         routes: {
-          'login' : ( BuildContext context ) => LoginPage(),
-          'home'  : ( BuildContext context ) => HomePage(),
-          'hectareas'  : ( BuildContext context ) => HectareasPage()
+          'login'      : ( BuildContext context ) => LoginPage(),
+          'home'       : ( BuildContext context ) => HomePage(),
+          'hectareas'  : ( BuildContext context ) => HectareasPage(),
+          'mapa'       : ( BuildContext context ) => MapaPage(),
+          'menu'       : ( BuildContext context ) => MenuPage(),
         },
 
         theme: ThemeData(
