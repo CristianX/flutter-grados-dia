@@ -39,7 +39,7 @@ class _MenuPageState extends State<MenuPage> {
           children: <Widget>[
             _listaMenu( menu ),
             SizedBox( height: 10 ),
-            _cargarPagina(seleccion)
+            Expanded(child: _cargarPagina(seleccion))
           ],
         ),
 

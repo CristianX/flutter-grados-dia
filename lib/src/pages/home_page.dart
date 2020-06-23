@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       },
       items: [
         BottomNavigationBarItem(icon: Icon( Icons.spa ), title: Text('Plantaciones')),
-        BottomNavigationBarItem(icon: Icon( Icons.people ), title: Text('Inicio')),
+        BottomNavigationBarItem(icon: Icon( Icons.menu ), title: Text('Menú')),
       ],
     );
   }
