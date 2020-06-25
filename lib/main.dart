@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:grados_dia_app/src/services/hectarea_service.dart';
 import 'package:grados_dia_app/src/services/hacienda_service.dart';
 import 'package:grados_dia_app/src/services/navegacion_floating_service.dart';
+import 'package:grados_dia_app/src/services/cultivos_services.dart';
 
 // Provider
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => new HectareaService()),
         ChangeNotifierProvider(create: (_) => new HaciendaService()),
         ChangeNotifierProvider(create: (_) => new NavegacionFloatingService()),
-        // ChangeNotifierProvider(create: (_) => new  CultivoService())
+        ChangeNotifierProvider(create: (_) => new  CultivoService())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
