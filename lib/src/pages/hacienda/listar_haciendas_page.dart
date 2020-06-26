@@ -30,7 +30,7 @@ class _ListarHaciendas extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemCount: haciendas.length,
       itemBuilder: (BuildContext context, int index) {
-        return _HaciendaCard( hacienda: haciendas[index], index : index );
+        return _HaciendaCard( hacienda: haciendas[index] );
       },
       
     );
@@ -40,11 +40,9 @@ class _ListarHaciendas extends StatelessWidget {
 class _HaciendaCard extends StatelessWidget {
 
   final Hacienda hacienda;
-  final int index;
 
   _HaciendaCard({
     @required this.hacienda,
-    @required this.index
   });
 
   @override

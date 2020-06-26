@@ -34,7 +34,7 @@ class _ListarCultivo extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       itemCount: cultivos.length,
       itemBuilder: (BuildContext context, int index) {
-        return _CultivoCard( cultivo: cultivos[index], index: index );
+        return _CultivoCard( cultivo: cultivos[index]);
       },
     );
   }
@@ -43,11 +43,9 @@ class _ListarCultivo extends StatelessWidget {
 class _CultivoCard extends StatelessWidget {
 
   final Cultivo cultivo;
-  final int index;
 
   _CultivoCard({
     @required this.cultivo,
-    @required this.index
   });
 
   @override
