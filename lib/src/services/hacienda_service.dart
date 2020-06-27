@@ -30,4 +30,22 @@ class HaciendaService with ChangeNotifier {
     notifyListeners();
   }
 
+  // POST
+
+  postHacienda( Hacienda hacienda ) async {
+
+    final resp = await http.post(_url, body:  <String, dynamic> {
+      'nombre' : hacienda.nombre.toString(),
+      'ubicacion': hacienda.ubicacion.toString(),
+      'altitud': hacienda.altitud.toString(),
+      'numeroHectareas': hacienda.numeroHectareas.toString()
+    });
+
+    final haciendaResp = haciendaResponseFromJson(resp.body);
+    this.haciendas.add( haciendaResp.hacienda[0] );
+    
+    notifyListeners();
+
+  }
+
 }

@@ -12,6 +12,7 @@ import 'package:grados_dia_app/src/services/usuarios_service.dart';
 import 'package:provider/provider.dart';
 
 // Vistas
+import 'package:grados_dia_app/src/pages/hacienda/hacienda_page.dart';
 import 'package:grados_dia_app/src/pages/login_page.dart';
 import 'package:grados_dia_app/src/pages/home_page.dart';
 import 'package:grados_dia_app/src/pages/hectareas_page.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
           'hectareas'  : ( BuildContext context ) => HectareasPage(),
           'mapa'       : ( BuildContext context ) => MapaPage(),
           'menu'       : ( BuildContext context ) => MenuPage(),
+
+          // Rutas de menú
+          'hacienda'   : ( BuildContext context ) => HaciendaPage()
         },
 
         theme: ThemeData(

@@ -7,6 +7,7 @@ import 'dart:convert';
 HaciendaResponse haciendaResponseFromJson(String str) => HaciendaResponse.fromJson(json.decode(str));
 
 String haciendaResponseToJson(HaciendaResponse data) => json.encode(data.toJson());
+String haciendaToJson(Hacienda data) => json.encode(data.toJson());
 
 class HaciendaResponse {
     HaciendaResponse({

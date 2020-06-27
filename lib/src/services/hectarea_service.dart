@@ -50,6 +50,7 @@ class HectareaService with ChangeNotifier{
     // print(decodeData);
 
     // notifyListeners();
+    // TODO: corregir la duplicidad de hectareas
 
     getHectareas();
 

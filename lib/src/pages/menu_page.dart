@@ -123,7 +123,7 @@ class _MenuPageState extends State<MenuPage> {
     switch ( seleccion ) {
 
       case 'hacienda' : {
-        navegacionFloatingService.menuSeleccionado = 'login';
+        navegacionFloatingService.menuSeleccionado = seleccion;
       } 
       return ListarHaciendasPage();
       case 'cultivo'  : return ListarCultivosPage();

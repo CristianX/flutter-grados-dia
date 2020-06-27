@@ -8,6 +8,7 @@ import 'package:grados_dia_app/src/services/hectarea_service.dart';
 
 
 // TODO: cambiar hectareaService por haciendaService para el llamado de hacienda al dropDown
+// TODO: Cambiar a stless widget todo
 
 String _opcionSelccionada;
 

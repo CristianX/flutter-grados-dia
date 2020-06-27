@@ -17,3 +17,13 @@ class MenuItems {
   ];
 
 }
+
+bool esNumero( String textoNumero ) {
+
+  if( textoNumero.isEmpty ) return false;
+
+  final numero = num.tryParse( textoNumero );
+
+  return ( numero == null ) ? false : true;
+
+}
