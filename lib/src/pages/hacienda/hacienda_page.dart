@@ -5,13 +5,23 @@ import 'package:grados_dia_app/src/services/hacienda_service.dart';
 import 'package:grados_dia_app/src/utils/utils.dart' as utils ;
 
 
-final formKey = GlobalKey<FormState>();
 
 Hacienda hacienda = new Hacienda();
+var formKey = GlobalKey<FormState>();
 
 class HaciendaPage extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
+
+    final Hacienda haciendaData = ModalRoute.of(context).settings.arguments;
+    if( haciendaData != null ) {
+      hacienda = haciendaData;
+    } else {
+      hacienda = Hacienda();
+      
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -42,6 +52,7 @@ class HaciendaPage extends StatelessWidget {
       ),
       floatingActionButton: _CrearFloatingActionButton()
     );
+
   }
 }
 
@@ -49,7 +60,7 @@ class _CrearCampoNombre extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
+      initialValue: ( hacienda != null ) ? hacienda.nombre : null,
       keyboardType: TextInputType.text,
       onSaved: (value) => hacienda.nombre = value ,
       textCapitalization: TextCapitalization.words,
@@ -76,7 +87,7 @@ class _CrearCampoUbicacion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
+      initialValue: ( hacienda != null ) ? hacienda.ubicacion : null,
       keyboardType: TextInputType.text,
       onSaved: (value) => hacienda.ubicacion = value,
       textCapitalization: TextCapitalization.words,
@@ -103,6 +114,7 @@ class _CrearCampoAltitud extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: ( hacienda != null ) ? hacienda.altitud : null,
       keyboardType: TextInputType.number,
       onSaved: (value) => hacienda.altitud = value,
       decoration: InputDecoration(
@@ -128,7 +140,7 @@ class _CrearCampoNumeroHectareas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-
+      initialValue: ( hacienda.numeroHectareas != null) ? hacienda.numeroHectareas.toString() : '',
       keyboardType: TextInputType.number,
       onSaved: (value) => hacienda.numeroHectareas = int.parse(value),
       decoration: InputDecoration(
@@ -174,7 +186,12 @@ class _CrearFloatingActionButton extends StatelessWidget {
 
     formKey.currentState.save();
 
-    haciendaService.postHacienda(hacienda);
+    if( hacienda.id == null ) {
+      haciendaService.postHacienda(hacienda);
+    } else {
+      haciendaService.putHacienda( hacienda.id , hacienda);
+    }
+
 
     Navigator.pop(context);
 

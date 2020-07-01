@@ -41,10 +41,36 @@ class HaciendaService with ChangeNotifier {
       'numeroHectareas': hacienda.numeroHectareas.toString()
     });
 
-    final haciendaResp = haciendaResponseFromJson(resp.body);
-    this.haciendas.add( haciendaResp.hacienda[0] );
+    // final haciendaResp = haciendaResponseFromJson(resp.body);
+    // this.haciendas.add( haciendaResp.hacienda[0] );
+    haciendas = [];
+    getHaciendas();
     
-    notifyListeners();
+    // notifyListeners();
+
+  }
+
+  // DETELE
+  deleteHacienda( String id ) async {
+
+    await http.delete('$_url/$id');
+    haciendas = [];
+    getHaciendas();
+
+  }
+
+  // PUT
+  putHacienda( String id, Hacienda hacienda ) async {
+
+    await http.put('$_url/$id', body: <String, dynamic> {
+      'nombre' : hacienda.nombre.toString(),
+      'ubicacion': hacienda.ubicacion.toString(),
+      'altitud': hacienda.altitud.toString(),
+      'numeroHectareas': hacienda.numeroHectareas.toString()
+    });
+
+    haciendas = [];
+    getHaciendas();
 
   }
 

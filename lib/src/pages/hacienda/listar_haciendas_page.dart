@@ -47,18 +47,36 @@ class _HaciendaCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20) ),
 
-      child: ListTile(
-        leading: Icon( Icons.home, color: Theme.of(context).primaryColor ),
-        title: Text( hacienda.nombre ),
-        subtitle: Text( 'Ubicación: ${ hacienda.ubicacion }\nAltitud: ${ hacienda.altitud }\nNúmero de Hectáreas: ${ hacienda.numeroHectareas }' ),
-        
+    final haciendaService = Provider.of<HaciendaService>(context);
+
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        child: Icon( Icons.delete, color: Colors.white ),
+        margin: EdgeInsets.symmetric( horizontal: 2, vertical: 2 ),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        )
+      ),
+      onDismissed: ( direccion ) {
+        haciendaService.deleteHacienda( hacienda.id );
+      },
+      child: Card(
+        elevation: 10,
+        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20) ),
+
+        child: ListTile(
+          leading: Icon( Icons.home, color: Theme.of(context).primaryColor ),
+          title: Text( hacienda.nombre ),
+          subtitle: Text( 'Ubicación: ${ hacienda.ubicacion }\nAltitud: ${ hacienda.altitud }\nNúmero de Hectáreas: ${ hacienda.numeroHectareas }' ),
+          onTap: () => Navigator.pushNamed(context, 'hacienda', arguments: hacienda),
+          
+
+        ),
 
       ),
-
     );
   }
 }
