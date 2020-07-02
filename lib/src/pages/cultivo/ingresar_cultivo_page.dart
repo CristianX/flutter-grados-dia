@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'package:grados_dia_app/src/services/hectarea_service.dart';
+import 'package:grados_dia_app/src/services/hectarea_service.dart' as providerHectarea;
 import 'package:grados_dia_app/src/models/cultivo_model.dart';
 
 
@@ -16,6 +16,15 @@ Cultivo cultivo = new Cultivo();
 class IngresarCultivoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    final hectareaService = Provider.of<providerHectarea.HectareaService>(context);
+
+    // Validación que sirve para guardar en los items del dropdown menu la opción de ninguna seleccionada, servirá para posteriormente la optimización de código de la lista de dropdowns
+    if( hectareaService.hectareas.isNotEmpty ) {
+      _opcionSeleccionada = hectareaService.hectareas[0].id;
+    } else {
+      _opcionSeleccionada = 'Ninguna opción seleccionada';
+    }
 
     cultivo.estado = false;
 
@@ -44,7 +53,7 @@ class IngresarCultivoPage extends StatelessWidget {
               SizedBox( height: 20 ),
               _CrearSwitchEstado(),
               SizedBox( height: 20 ),
-              _CrearComboBoxHectarea()
+              _CrearComboBoxHectarea( hectareaService.hectareas )
 
             ],
 
@@ -52,7 +61,14 @@ class IngresarCultivoPage extends StatelessWidget {
 
         ),
 
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+
+        child: Icon(Icons.save),
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {},
+
+      ),
       
     );
   }
@@ -122,7 +138,6 @@ class __CrearSwitchEstadoState extends State<_CrearSwitchEstado> {
             onChanged: ( valor ){
               setState(() {
                 cultivo.estado = valor;
-                print( cultivo.estado );
               });
             },
             
@@ -135,6 +150,12 @@ class __CrearSwitchEstadoState extends State<_CrearSwitchEstado> {
 }
 
 class _CrearComboBoxHectarea extends StatefulWidget {
+
+  final List<providerHectarea.Hectarea> hectareas;
+
+  const _CrearComboBoxHectarea( this.hectareas );
+
+
   @override
   __CrearComboBoxHectareaState createState() => __CrearComboBoxHectareaState();
 }
@@ -143,37 +164,32 @@ class __CrearComboBoxHectareaState extends State<_CrearComboBoxHectarea> {
   @override
   Widget build(BuildContext context) {
 
-    final hectareaService = Provider.of<HectareaService>(context);
+    
 
-    // Validación que sirve para guardar en los items del dropdown menu la opción de ninguna seleccionada, servirá para posteriormente la optimización de código de la lista de dropdowns
-    if( hectareaService.hectareas.isNotEmpty ) {
-      _opcionSeleccionada = hectareaService.hectareas[0].id;
-    } else {
-      _opcionSeleccionada = 'Ninguna opción seleccionada';
-    }
+    
 
     List<DropdownMenuItem<String>> getHectareas(){
 
-    List<DropdownMenuItem<String>> listaHectarea = new List();
+      List<DropdownMenuItem<String>> listaHectarea = new List();
 
-    if( hectareaService.hectareas.isNotEmpty  ){
+      if( this.widget.hectareas.isNotEmpty  ){
 
-      hectareaService.hectareas.forEach((hectarea) {
+        this.widget.hectareas.forEach((hectarea) {
+          listaHectarea.add(DropdownMenuItem(
+            child: Text( hectarea.nombre ),
+            value: hectarea.id,
+          ));
+        });
+      }
+      else {
         listaHectarea.add(DropdownMenuItem(
-          child: Text( hectarea.nombre ),
-          value: hectarea.id,
+          child: Text('Ninguna hectarea en existencia'),
+          value: 'Ninguna hectarea en existencia',
         ));
-      });
-    }
-    else {
-      listaHectarea.add(DropdownMenuItem(
-        child: Text('Ninguna hectarea en existencia'),
-        value: 'Ninguna hectarea en existencia',
-      ));
-    }
+      }
 
 
-    return listaHectarea;
+      return listaHectarea;
 
   }
 
@@ -191,7 +207,6 @@ class __CrearComboBoxHectareaState extends State<_CrearComboBoxHectarea> {
 
             setState(() {
               _opcionSeleccionada = opt;
-              print( _opcionSeleccionada );
             });
 
 
