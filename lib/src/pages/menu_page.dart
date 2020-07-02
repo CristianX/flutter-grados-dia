@@ -126,7 +126,10 @@ class _MenuPageState extends State<MenuPage> {
         navegacionFloatingService.menuSeleccionado = seleccion;
       } 
       return ListarHaciendasPage();
-      case 'cultivo'  : return ListarCultivosPage();
+      case 'cultivo'  : {
+        navegacionFloatingService.menuSeleccionado = seleccion;
+      }
+      return ListarCultivosPage();
       case 'control'  : return ListarControlPage();
       case 'usuario'  : return ListarUsuariosPage();
       case 'clima'    : return ListarClimaPage();

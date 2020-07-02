@@ -143,7 +143,6 @@ class __CrearNombreState extends State<_CrearNombre> {
 
 class _Ubicacion extends StatefulWidget {
 
-  // Para rellenar los campos de texto de latitud y longitud
   @override
   __UbicacionState createState() => __UbicacionState();
 }
@@ -233,6 +232,7 @@ class _Hacienda extends StatefulWidget {
 }
 
 class __HaciendaState extends State<_Hacienda> {
+  // TODO: Código repetido con ingresar_cultivo_page
   List<DropdownMenuItem<String>> getHaciendas(){
 
     List<DropdownMenuItem<String>> listaHaciendas = new List();
@@ -257,7 +257,7 @@ class __HaciendaState extends State<_Hacienda> {
 
     return listaHaciendas;
 
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,17 +269,15 @@ class __HaciendaState extends State<_Hacienda> {
 
         Icon( Icons.store, color: Theme.of(context).primaryColor ),
         SizedBox( width: 17 ),
-        Expanded(
-          child: DropdownButton(
-            items: getHaciendas(),
-            value: _opcionSelccionada,
-            onChanged: (opt) {
-              setState(() {
-                _opcionSelccionada = opt;
-              });
-            },
-            // items: ,
-          ),
+        DropdownButton(
+          items: getHaciendas(),
+          value: _opcionSelccionada,
+          onChanged: (opt) {
+            setState(() {
+              _opcionSelccionada = opt;
+            });
+          },
+          // items: ,
         )
         
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grados_dia_app/src/pages/cultivo/ingresar_cultivo_page.dart';
 
 // Services
 // import 'package:grados_dia_app/src/services/cultivos_services.dart';
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
           'menu'       : ( BuildContext context ) => MenuPage(),
 
           // Rutas de menú
-          'hacienda'   : ( BuildContext context ) => HaciendaPage()
+          'hacienda'   : ( BuildContext context ) => HaciendaPage(),
+          'cultivo' : ( BuildContext context ) => IngresarCultivoPage()
         },
 
         theme: ThemeData(

@@ -8,6 +8,7 @@ A new Flutter project.
 * Peticiones http `http:`
 * Provider `provider:`
 * GeoLocator `geolocator:`
+* Table Calendar `table_calendar:`
 
 ## Getting Started
 
