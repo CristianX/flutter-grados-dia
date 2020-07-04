@@ -36,4 +36,30 @@ class CultivoService with ChangeNotifier {
 
   }
 
+  postCultivos( Cultivo cultivo, String hectarea ) async {
+
+    await http.post( _url, body: <String, dynamic> {
+
+      'fecha' : cultivo.fecha.toString(),
+      'estado' : cultivo.estado.toString(),
+      'hectarea' : hectarea
+
+    });
+
+    cultivos = [];
+
+    getCultivos();
+
+  }
+
+  deleteCultivo( String id ) async {
+
+    await http.delete( '$_url/$id' );
+
+    cultivos = [];
+
+    getCultivos();
+
+  }
+
 }

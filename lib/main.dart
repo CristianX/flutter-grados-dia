@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grados_dia_app/src/pages/cultivo/ingresar_cultivo_page.dart';
 
 // Services
 // import 'package:grados_dia_app/src/services/cultivos_services.dart';
@@ -19,6 +18,8 @@ import 'package:grados_dia_app/src/pages/home_page.dart';
 import 'package:grados_dia_app/src/pages/hectareas_page.dart';
 import 'package:grados_dia_app/src/pages/mapa_page.dart';
 import 'package:grados_dia_app/src/pages/menu_page.dart';
+import 'package:grados_dia_app/src/pages/cultivo/ingresar_cultivo_page.dart';
+import 'package:grados_dia_app/src/pages/control/control_cultivo_page.dart';
  
 void main() => runApp(MyApp());
  
@@ -45,7 +46,10 @@ class MyApp extends StatelessWidget {
 
           // Rutas de menú
           'hacienda'   : ( BuildContext context ) => HaciendaPage(),
-          'cultivo' : ( BuildContext context ) => IngresarCultivoPage()
+          'cultivo'    : ( BuildContext context ) => IngresarCultivoPage(),
+
+          // Rutas de la página de cultivos
+          'controlCultivo' : ( BuildContext context ) => ControlCultivoPage()
         },
 
         theme: ThemeData(

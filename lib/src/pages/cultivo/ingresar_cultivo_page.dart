@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grados_dia_app/src/services/cultivos_services.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -62,13 +63,7 @@ class IngresarCultivoPage extends StatelessWidget {
         ),
 
       ),
-      floatingActionButton: FloatingActionButton(
-
-        child: Icon(Icons.save),
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {},
-
-      ),
+      floatingActionButton: _CrearFloatingActionButton()
       
     );
   }
@@ -219,5 +214,31 @@ class __CrearComboBoxHectareaState extends State<_CrearComboBoxHectarea> {
       ],
       
     );
+  }
+}
+
+class _CrearFloatingActionButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    final cultivoService = Provider.of<CultivoService>(context);
+
+    return FloatingActionButton(
+
+      backgroundColor: Theme.of(context).primaryColor,
+      child: Icon( Icons.save ),
+      onPressed: (){
+        _submit( cultivoService, context );
+      },
+      
+    );
+  }
+
+  void _submit( CultivoService cultivoService, BuildContext context ) {
+
+    cultivoService.postCultivos(cultivo,  _opcionSeleccionada );
+
+    Navigator.pop(context);
+
   }
 }

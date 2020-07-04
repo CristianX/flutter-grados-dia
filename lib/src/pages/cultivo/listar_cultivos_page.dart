@@ -51,20 +51,41 @@ class _CultivoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    final cultivoService = Provider.of<CultivoService>(context);
+
     initializeDateFormatting('es');
     final formatoFecha = new DateFormat.yMMMMd('es');
 
 
-    return Card(
+    return Dismissible(
 
-      elevation: 10,
-      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20)),
-      child: ListTile(
-        leading: Icon( Icons.local_florist, color: ( cultivo.estado != false ) ? Theme.of(context).primaryColor : Colors.black54 ),
-        title: ( cultivo.hectarea != null ) ? Text( cultivo.hectarea.nombre ) : Text( 'No hay el texto' ),
-        subtitle: Text( formatoFecha.format( cultivo.fecha ) ),
-      )
-      
+      key: UniqueKey(),
+      background: Container(
+        child: Icon( Icons.delete, color: Colors.white ),
+        margin: EdgeInsets.symmetric( horizontal: 2, vertical: 2 ),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(20),
+        )
+      ),
+      onDismissed: ( direccion ) {
+
+        cultivoService.deleteCultivo( cultivo.id );
+
+      },
+
+      child: Card(
+
+        elevation: 10,
+        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20)),
+        child: ListTile(
+          leading: Icon( Icons.local_florist, color: ( cultivo.estado != false ) ? Theme.of(context).primaryColor : Colors.black54 ),
+          title: ( cultivo.hectarea != null ) ? Text( cultivo.hectarea.nombre ) : Text( 'No hay el texto' ),
+          subtitle: Text( formatoFecha.format( cultivo.fecha ) ),
+          onTap: () => Navigator.pushNamed(context, 'controlCultivo', arguments: cultivo),
+        )
+        
+      ),
     );
   }
 }
