@@ -29,10 +29,55 @@ class ControlCultivoPage extends StatelessWidget {
         title: Text( '$nombreCultivo', style: TextStyle( color: Theme.of(context).primaryColor ) ),
 
       ),
-      body: Center(
-        child: Text( '${ cultivoData.fecha  }' ),
-      ),
+      body: Column(
+
+        children: <Widget>[
+
+          Container(
+
+            height: 400,
+            child: SfCartesianChart(
+              primaryXAxis: CategoryAxis(),
+              series: <ChartSeries<DataGrafico, String>>[
+                LineSeries<DataGrafico, String>(
+                  dataSource: getDataColumna(),
+                  xValueMapper: ( DataGrafico data, _ ) => data.x,
+                  yValueMapper: ( DataGrafico data, _ ) => data.y,
+                  dataLabelSettings: DataLabelSettings(
+                    isVisible: true,
+                  )
+                )
+              ],
+            ),
+            
+          )
+
+        ],
+
+      )
       
     );
   }
+}
+
+class DataGrafico {
+
+  String x;
+  double y;
+
+  DataGrafico( this.x, this.y );
+
+}
+
+dynamic getDataColumna() {
+
+  List<DataGrafico> dataColumna = <DataGrafico>[
+    DataGrafico( 'Perro joto', 20 ),
+    DataGrafico( 'Perro gay', 30 ),
+    DataGrafico( 'Perro puto', 40 ),
+    DataGrafico( 'Perro cazquibana', 10 ),
+  ];
+
+  return dataColumna;
+
 }
