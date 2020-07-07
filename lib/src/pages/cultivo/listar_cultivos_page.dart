@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:grados_dia_app/src/services/cultivos_services.dart';
 import 'package:grados_dia_app/src/models/cultivo_model.dart';
+import 'package:grados_dia_app/src/services/predecir_meses_services.dart';
 
 
 class ListarCultivosPage extends StatelessWidget {
@@ -82,7 +83,11 @@ class _CultivoCard extends StatelessWidget {
           leading: Icon( Icons.local_florist, color: ( cultivo.estado != false ) ? Theme.of(context).primaryColor : Colors.black54 ),
           title: ( cultivo.hectarea != null ) ? Text( cultivo.hectarea.nombre ) : Text( 'No hay el texto' ),
           subtitle: Text( formatoFecha.format( cultivo.fecha ) ),
-          onTap: () => Navigator.pushNamed(context, 'controlCultivo', arguments: cultivo),
+          onTap: () {
+            final predecirMesesService = Provider.of<PredecirMesesService>(context, listen: false);
+            predecirMesesService.cultivoSeleccionado = cultivo.id;
+            Navigator.pushNamed(context, 'controlCultivo', arguments: cultivo);
+          } 
         )
         
       ),
