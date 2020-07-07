@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grados_dia_app/src/services/predecir_meses_services.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:grados_dia_app/src/models/cultivo_model.dart';
 
@@ -14,8 +13,8 @@ class ControlCultivoPage extends StatelessWidget {
 
     final predecirMesesService = Provider.of<PredecirMesesService>(context);
 
-    var temperaturasMaximas = predecirMesesService.temperaturasPorMeses[0].tempMax;
-    var temperaturasMinimas = predecirMesesService.temperaturasPorMeses[0].tempMin;
+    // var temperaturasMaximas = predecirMesesService.temperaturasPorMeses[0].tempMax;
+    // var temperaturasMinimas = predecirMesesService.temperaturasPorMeses[0].tempMin;
 
 
 
@@ -38,89 +37,12 @@ class ControlCultivoPage extends StatelessWidget {
         title: Text( '$nombreCultivo', style: TextStyle( color: Theme.of(context).primaryColor ) ),
 
       ),
-      body: Column(
-
-        children: <Widget>[
-
-          Container(
-
-            height: 300,
-            child: SfCartesianChart(
-              primaryXAxis: CategoryAxis(),
-              series: <ChartSeries<DataGrafico, String>>[
-                LineSeries<DataGrafico, String>(
-                  dataSource: getDataTemperaturaMaxima( temperaturasMaximas ),
-                  xValueMapper: ( DataGrafico data, _ ) => data.x,
-                  yValueMapper: ( DataGrafico data, _ ) => data.y,
-                  dataLabelSettings: DataLabelSettings(
-                    isVisible: true,
-                  )
-                ),
-                LineSeries<DataGrafico, String>(
-                  color: Colors.red,
-                  dataSource: getDataTemperaturaMinima( temperaturasMinimas ),
-                  xValueMapper: ( DataGrafico data, _ ) => data.x,
-                  yValueMapper: ( DataGrafico data, _ ) => data.y,
-                  dataLabelSettings: DataLabelSettings(
-                    isVisible: true,
-                  )
-                ),
-              ],
-            ),
-            
-          )
-
-        ],
-
-      )
+      body: ( predecirMesesService.getPrediccionesPor3Meses.length == 0 ) ? Center( 
+        child: CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>( Theme.of(context).primaryColor ) ),
+       ) : Center(
+         child: Text( '${ predecirMesesService.getPrediccionesPor3Meses[0].cultivo }' ),
+       ),
       
     );
   }
-}
-
-class DataGrafico {
-
-  String x;
-  double y;
-
-  DataGrafico( this.x, this.y );
-
-}
-
-dynamic getDataTemperaturaMaxima( List<double> temperaturasMaximas ) {
-
-  List<DataGrafico> dataTemperaturaMaxima = [];
-  int id = 0;
-
-  temperaturasMaximas.forEach(( temperaturaMaxima ) {
-
-    
-
-    dataTemperaturaMaxima.add( DataGrafico( id.toString() ,  temperaturaMaxima ) );
-
-    id ++;
-    
-   });
-
-  return dataTemperaturaMaxima;
-
-}
-
-dynamic getDataTemperaturaMinima( List<double> temperaturasMinimas ) {
-
-  List<DataGrafico> dataTemperaturaMinima = [];
-  int id = 0;
-
-  temperaturasMinimas.forEach(( temperaturaMinima ) {
-
-    
-
-    dataTemperaturaMinima.add( DataGrafico( id.toString() ,  temperaturaMinima ) );
-
-    id ++;
-    
-   });
-
-  return dataTemperaturaMinima;
-
 }

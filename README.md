@@ -9,7 +9,6 @@ A new Flutter project.
 * Provider `provider:`
 * GeoLocator `geolocator:`
 * Table Calendar `table_calendar:`
-* SyncFusion Flutter Charts `syncfusion_flutter_charts:`
 
 ## Getting Started
 
