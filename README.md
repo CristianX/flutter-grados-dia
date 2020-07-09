@@ -9,6 +9,7 @@ A new Flutter project.
 * Provider `provider:`
 * GeoLocator `geolocator:`
 * Table Calendar `table_calendar:`
+* Charts Flutter `charts_flutter:`
 
 ## Getting Started
 

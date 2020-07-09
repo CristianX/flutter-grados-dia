@@ -35,6 +35,7 @@ dependencies:
   provider:
   geolocator:
   table_calendar:
+  charts_flutter:
 
 
 dev_dependencies:
