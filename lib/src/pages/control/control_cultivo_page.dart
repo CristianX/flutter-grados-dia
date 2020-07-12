@@ -6,6 +6,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:grados_dia_app/src/models/cultivo_model.dart';
 import 'package:grados_dia_app/src/services/predecir_meses_services.dart';
+import 'package:grados_dia_app/src/models/data_grafico_model.dart';
+import 'package:grados_dia_app/src/widgets/grafica_linear.dart';
 
 
 
@@ -73,8 +75,8 @@ class ControlCultivoPage extends StatelessWidget {
           id: '° Máxima',
           data: ( predecirMesesService.getPrediccionesPor3Meses.length == 0  ) ? List() 
           : getDataTemperaturaMaxima( cultivoData.fecha, predecirMesesService.getPrediccionesPor3Meses[0].tempMax, contador ),
-          domainFn: (DataGrafico sales, _) => sales.yearval,
-          measureFn: ( DataGrafico sales, _ ) => sales.salesval
+          domainFn: (DataGrafico dataGrafico, _) => dataGrafico.dias,
+          measureFn: ( DataGrafico dataGrafico, _ ) => dataGrafico.data
         )
     );
 
@@ -84,8 +86,8 @@ class ControlCultivoPage extends StatelessWidget {
           id: '° Mínima',
           data: ( predecirMesesService.getPrediccionesPor3Meses.length == 0  ) ? List() 
           : getDataTemperaturaMinima( cultivoData.fecha, predecirMesesService.getPrediccionesPor3Meses[0].tempMin, contador ),
-          domainFn: (DataGrafico sales, _) => sales.yearval,
-          measureFn: ( DataGrafico sales, _ ) => sales.salesval
+          domainFn: (DataGrafico dataGrafico, _) => dataGrafico.dias,
+          measureFn: ( DataGrafico dataGrafico, _ ) => dataGrafico.data
         )
     );
 
@@ -121,20 +123,7 @@ class ControlCultivoPage extends StatelessWidget {
             children: <Widget>[
               Text( 'Temperatura (3 meses)', style: TextStyle( fontSize: 24.0, fontWeight: FontWeight.bold ) ),
               Expanded(
-                child: charts.TimeSeriesChart(
-                  _seriesLinearData,
-                  animate: true,
-                  animationDuration: Duration( seconds: 1 ),
-                  dateTimeFactory: const charts.LocalDateTimeFactory(),
-                  domainAxis: charts.DateTimeAxisSpec(
-                    tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
-                      day: charts.TimeFormatterSpec(
-                        format: 'd',
-                        transitionFormat: 'MM/dd/yyyy'
-                      )
-                    )
-                  ),
-                ),
+                child: GraficaLinear(_seriesLinearData)
               ),
             ],
           ),
@@ -143,17 +132,6 @@ class ControlCultivoPage extends StatelessWidget {
       
     );
   }
-}
-
-
-
-class DataGrafico {
-
-  DateTime yearval;
-  double salesval;
-
-  DataGrafico( this.yearval, this.salesval);
-
 }
 
 dynamic getDataTemperaturaMaxima( DateTime fecha, List<double> temperaturasMaximas, int contador ) {
