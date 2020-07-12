@@ -46,14 +46,14 @@ List<DataGrafico> getDataTemperatura( DateTime fecha, List<double> temperaturas,
 
   List<DataGrafico> dataTemperatura = [];
   DateTime fechaGrafico = new DateTime( fecha.year, fecha.month, fecha.day );
-  int id = 0;
+  int index = 0;
 
   temperaturas.forEach(( temperatura ) {
 
-    if( id <= contador3Meses ){
+    if( index <= contador3Meses ){
       dataTemperatura.add( DataGrafico( fechaGrafico, temperatura ) );
-      id ++;
-      fechaGrafico = DateTime( fecha.year, fecha.month, fecha.day + id );
+      index ++;
+      fechaGrafico = DateTime( fecha.year, fecha.month, fecha.day + index );
     }
 
     

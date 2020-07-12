@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 
 
@@ -25,6 +27,10 @@ class ControlCultivoPage extends StatelessWidget {
     final Cultivo cultivoData = ModalRoute.of(context).settings.arguments;
 
     final predecir3MesesService = Provider.of<PredecirMesesService>(context);
+
+    // TODO: optimizar esto en utils
+    initializeDateFormatting('es');
+    final formatoFecha = new DateFormat.yMMMMd('es');
 
     int contador3Meses;
 
@@ -90,15 +96,19 @@ class ControlCultivoPage extends StatelessWidget {
           margin: EdgeInsets.symmetric( horizontal: 10 ),
           child: Column(
             children: <Widget>[
-              Text( 'Temperatura (3 meses)', style: TextStyle( fontSize: 24.0, fontWeight: FontWeight.bold ) ),
+              Text( 'Temperatura (3 meses)', style: TextStyle( fontSize: 17.0, fontWeight: FontWeight.bold ) ),
               Expanded(
                 child: GraficaLinear(_seriesLinearData)
               ),
+              SizedBox( height: 10 ),
+              Text( 'Cosecha: ' + formatoFecha.format( DateTime(cultivoData.fecha.year, cultivoData.fecha.month, cultivoData.fecha.day + contador3Meses)  ), style: TextStyle( 
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.bold
+              ))
             ],
           ),
-      ),
-       )
-      
+        ),
+      )
     );
   }
 }
