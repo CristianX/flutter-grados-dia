@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:grados_dia_app/src/services/predecir_dias_service.dart';
 import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_mobile_carousel/carousel.dart';
 
 
 
@@ -27,6 +28,8 @@ class ControlCultivoPage extends StatelessWidget {
 
     final predecir3MesesService = Provider.of<PredecirMesesService>(context);
 
+    final predecirPor5DiasService = Provider.of<PredecirDiasService>(context);
+
     String nombreCultivo = '';
 
     // TODO: borrar cuando se eliminen campos innecesarios
@@ -46,16 +49,16 @@ class ControlCultivoPage extends StatelessWidget {
         title: Text( '$nombreCultivo', style: TextStyle( color: Theme.of(context).primaryColor ) ),
 
       ),
-      body: ( predecir3MesesService.getPrediccionesPor3Meses.length == 0 ) ? Center ( 
+      body: ( predecir3MesesService.getPrediccionesPor3Meses.length == 0 || predecirPor5DiasService.getPrediccionesPor5Dias.length == 0 ) ? Center ( 
         child: CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>( Theme.of(context).primaryColor ) ),
        ) : SingleChildScrollView(
          physics: BouncingScrollPhysics(),
-         child: CarouselSlider(
-           items: <Widget>[
+         child: Carousel(
+           rowCount: 1,
+           children: <Widget>[
              _GraficaPrediccion3Meses(predicciones3Meses: predecir3MesesService, fecha: cultivoData.fecha),
-             _GraficaPrediccion3Meses(predicciones3Meses: predecir3MesesService, fecha: cultivoData.fecha),
+             _GraficaPrediccion5Dias(predicciones5Dias: predecirPor5DiasService, fecha: cultivoData.fecha),
            ],
-           options: null,
          )
       )
     );
@@ -126,7 +129,7 @@ class _GraficaPrediccion3Meses extends StatelessWidget {
             child: GraficaLinear(_dataGraficoPreddicciones3Meses)
           ),
           SizedBox( height: 10 ),
-          Text( 'Cosecha: ' + formatoFecha.format( DateTime(fecha.year, fecha.month, fecha.day + contador3Meses)  ), 
+          Text( 'Cosecha: ' + formatoFecha.format( DateTime(fecha.year, fecha.month, fecha.day + (contador3Meses - 1))  ), 
             style: TextStyle( 
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold
@@ -137,3 +140,76 @@ class _GraficaPrediccion3Meses extends StatelessWidget {
     );
   }
 }
+
+class _GraficaPrediccion5Dias extends StatelessWidget {
+
+  final PredecirDiasService predicciones5Dias;
+  final DateTime fecha;
+
+  _GraficaPrediccion5Dias({
+    @required this.predicciones5Dias,
+    @required this.fecha
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final List<charts.Series<DataGrafico, DateTime>> _dataGraficoPreddicciones5Dias = new List();
+    // TODO: optimizar esto en utils
+    initializeDateFormatting('es');
+    final formatoFecha = new DateFormat.yMMMMd('es');
+
+    int contador5Dias;
+
+    if( predicciones5Dias.getPrediccionesPor5Dias.length != 0 ) {
+
+      contador5Dias = utilsCultivo.calculoGradosDia( predicciones5Dias.getPrediccionesPor5Dias );
+
+    }
+
+
+    
+    _dataGraficoPreddicciones5Dias.add(
+      charts.Series(
+          colorFn: (__, _) => charts.ColorUtil.fromDartColor( Colors.red ),
+          id: '° Máxima',
+          data: ( predicciones5Dias.getPrediccionesPor5Dias.length == 0  ) ? List() 
+          : utilsCultivo.getDataTemperatura( fecha, predicciones5Dias.getPrediccionesPor5Dias[0].tempMax, contador5Dias ),
+          domainFn: (DataGrafico dataGrafico, _) => dataGrafico.dias,
+          measureFn: ( DataGrafico dataGrafico, _ ) => dataGrafico.data
+        )
+    );
+
+    _dataGraficoPreddicciones5Dias.add(
+      charts.Series(
+          colorFn: (__, _) => charts.ColorUtil.fromDartColor( Colors.blue ),
+          id: '° Mínima',
+          data: ( predicciones5Dias.getPrediccionesPor5Dias.length == 0  ) ? List() 
+          : utilsCultivo.getDataTemperatura( fecha, predicciones5Dias.getPrediccionesPor5Dias[0].tempMin, contador5Dias ),
+          domainFn: (DataGrafico dataGrafico, _) => dataGrafico.dias,
+          measureFn: ( DataGrafico dataGrafico, _ ) => dataGrafico.data
+        )
+    );
+    
+    return Container(
+
+      height: 300,
+      margin: EdgeInsets.symmetric( horizontal: 10 ),
+      child: Column(
+        children: <Widget>[
+          Text( 'Temperatura (5 días)', style: TextStyle( fontSize: 17.0, fontWeight: FontWeight.bold ) ),
+          Expanded(
+            child: GraficaLinear(_dataGraficoPreddicciones5Dias)
+          ),
+          SizedBox( height: 10 ),
+          Text( 'Cosecha: ' + formatoFecha.format( DateTime(fecha.year, fecha.month, fecha.day + (contador5Dias - 1))  ), 
+            style: TextStyle( 
+              color: Theme.of(context).primaryColor,
+              fontWeight: FontWeight.bold
+          ))
+        ],
+      ),
+      
+    );
+  }
+}
+

@@ -6,6 +6,7 @@ import 'package:grados_dia_app/src/services/hectarea_service.dart';
 import 'package:grados_dia_app/src/services/hacienda_service.dart';
 import 'package:grados_dia_app/src/services/navegacion_floating_service.dart';
 import 'package:grados_dia_app/src/services/cultivos_services.dart';
+import 'package:grados_dia_app/src/services/predecir_dias_service.dart';
 import 'package:grados_dia_app/src/services/predecir_meses_services.dart';
 import 'package:grados_dia_app/src/services/usuarios_service.dart';
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => new  CultivoService()),
         ChangeNotifierProvider(create: (_) => new  UsuarioService()),
         ChangeNotifierProvider(create: (_) => new PredecirMesesService()),
+        ChangeNotifierProvider(create: (_) => new PredecirDiasService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

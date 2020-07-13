@@ -1,7 +1,7 @@
 import 'package:grados_dia_app/src/models/data_grafico_model.dart';
 import 'package:grados_dia_app/src/models/predecir_meses_model.dart';
 
-int calculoGradosDia( List<Predecir> dataPrediccion ) {
+int calculoGradosDia( List dataPrediccion ) {
 
   List<double> _temperaturasMaximas = new List();
   List<double> _temperaturasMinimas = new List();

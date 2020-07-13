@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grados_dia_app/src/models/predecir_meses_model.dart';
 
-// Http
 import 'package:http/http.dart' as http;
 
 final _url = 'https://brocolera.herokuapp.com/predecir';
