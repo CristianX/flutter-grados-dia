@@ -60,9 +60,8 @@ class ControlCultivoPage extends StatelessWidget {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Flexible(
+            Expanded(
               child: Container(
-                height: 300,
                 child: PageView(
                   physics: BouncingScrollPhysics(),
                   children: <Widget>[
@@ -72,7 +71,7 @@ class ControlCultivoPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox( height: 20 ),
+            Expanded(child: _ListarControlDeCultivo(controlesCultivo: controlCultivoService.getControlPorCultivo)),
             _CrearBoton()
           ],
          )
@@ -234,10 +233,48 @@ class _ListarControlDeCultivo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
       itemCount: controlesCultivo.length,
       itemBuilder: (BuildContext context, int index) {
-      return Text(controlesCultivo[index].edadPlanta.toString());
+      return _ControlCultivoCard( controlCultivo: controlesCultivo[index] );
      },
+    );
+  }
+}
+
+class _ControlCultivoCard extends StatelessWidget {
+
+  final controlCultivoModel.ControlCultivo controlCultivo;
+
+  _ControlCultivoCard({ @required this.controlCultivo });
+
+  @override
+  Widget build(BuildContext context) {
+
+    // TODO: optimizar esto en utils
+    initializeDateFormatting('es');
+    final formatoFecha = new DateFormat.yMMMMd('es');
+
+    return Card(
+
+      elevation: 10,
+      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20) ),
+
+      child: ListTile(
+        leading: Icon( Icons.flare, color: Theme.of(context).primaryColor ),
+        title: Text( formatoFecha.format( controlCultivo.fecha ) ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text('Edad: ${ controlCultivo.edadPlanta }'),
+            Text('Número de hojas: ${ controlCultivo.numeroHojas }'),
+            Text('Altura: ${ controlCultivo.altura }'),
+            Text('Diámetro Pella: ${ controlCultivo.diametroPella }'),
+            Text('Color de hoja: ${ controlCultivo.color }'),
+          ],
+        ),
+      ),
+
     );
   }
 }
