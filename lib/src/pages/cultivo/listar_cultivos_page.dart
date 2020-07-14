@@ -8,6 +8,7 @@ import 'package:grados_dia_app/src/services/cultivos_services.dart';
 import 'package:grados_dia_app/src/models/cultivo_model.dart';
 import 'package:grados_dia_app/src/services/predecir_meses_services.dart';
 import 'package:grados_dia_app/src/services/predecir_dias_service.dart';
+import 'package:grados_dia_app/src/services/control_cultivo_service.dart';
 
 
 class ListarCultivosPage extends StatelessWidget {
@@ -85,10 +86,13 @@ class _CultivoCard extends StatelessWidget {
           title: ( cultivo.hectarea != null ) ? Text( cultivo.hectarea.nombre ) : Text( 'No hay el texto' ),
           subtitle: Text( formatoFecha.format( cultivo.fecha ) ),
           onTap: () {
+            // TODO: optimizar código incluyendo todo en el mismo service
             final predecirMesesService = Provider.of<PredecirMesesService>(context, listen: false);
             final predecirPor5DiasService = Provider.of<PredecirDiasService>(context, listen: false);
+            final controlCultivoService = Provider.of<ControlCultivoService>(context, listen: false);
             predecirMesesService.cultivoSeleccionado = cultivo.id;
             predecirPor5DiasService.cultivoSeleccionado = cultivo.id;
+            controlCultivoService.cultivoSeleccionado = cultivo.id;
             Navigator.pushNamed(context, 'controlCultivo', arguments: cultivo);
           } 
         )

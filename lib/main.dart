@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grados_dia_app/src/services/control_cultivo_service.dart';
 
 // Services
 // import 'package:grados_dia_app/src/services/cultivos_services.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => new  UsuarioService()),
         ChangeNotifierProvider(create: (_) => new PredecirMesesService()),
         ChangeNotifierProvider(create: (_) => new PredecirDiasService()),
+        ChangeNotifierProvider(create: (_) => new ControlCultivoService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -48,7 +50,7 @@ class MyApp extends StatelessWidget {
           'mapa'       : ( BuildContext context ) => MapaPage(),
           'menu'       : ( BuildContext context ) => MenuPage(),
 
-          // Rutas de menú
+          // Rutas de floating
           'hacienda'   : ( BuildContext context ) => HaciendaPage(),
           'cultivo'    : ( BuildContext context ) => IngresarCultivoPage(),
 
