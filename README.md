@@ -10,7 +10,6 @@ A new Flutter project.
 * GeoLocator `geolocator:`
 * Table Calendar `table_calendar:`
 * Charts Flutter `charts_flutter:`
-* Flutter Mobile Carousel `flutter_mobile_carousel:`
 
 ## Getting Started
 

@@ -160,13 +160,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.4"
-  flutter_mobile_carousel:
-    dependency: "direct main"
-    description:
-      name: flutter_mobile_carousel
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter

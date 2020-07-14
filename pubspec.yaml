@@ -36,7 +36,6 @@ dependencies:
   geolocator:
   table_calendar:
   charts_flutter:
-  flutter_mobile_carousel:
 
 
 dev_dependencies:

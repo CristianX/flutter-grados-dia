@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter_mobile_carousel/carousel.dart';
 
 
 
@@ -59,14 +58,19 @@ class ControlCultivoPage extends StatelessWidget {
         child: CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>( Theme.of(context).primaryColor ) ),
        ) : Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Carousel(
-              rowCount: 1,
-              children: <Widget>[
-                _GraficaPrediccion5Dias(predicciones5Dias: predecirPor5DiasService, fecha: cultivoData.fecha),
-                _GraficaPrediccion3Meses(predicciones3Meses: predecir3MesesService, fecha: cultivoData.fecha),
-              ],
+            Flexible(
+              child: Container(
+                height: 300,
+                child: PageView(
+                  physics: BouncingScrollPhysics(),
+                  children: <Widget>[
+                    _GraficaPrediccion5Dias(predicciones5Dias: predecirPor5DiasService, fecha: cultivoData.fecha),
+                    _GraficaPrediccion3Meses(predicciones3Meses: predecir3MesesService, fecha: cultivoData.fecha,),
+                  ],
+                ),
+              ),
             ),
             SizedBox( height: 20 ),
             _CrearBoton()
@@ -127,8 +131,6 @@ class _GraficaPrediccion5Dias extends StatelessWidget {
     );
     
     return Container(
-
-      height: 300,
       margin: EdgeInsets.symmetric( horizontal: 10 ),
       child: Column(
         children: <Widget>[
