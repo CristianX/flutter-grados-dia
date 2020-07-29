@@ -133,7 +133,7 @@ class _GraficaPrediccion5Dias extends StatelessWidget {
       margin: EdgeInsets.symmetric( horizontal: 10 ),
       child: Column(
         children: <Widget>[
-          Text( 'Temperatura (5 días)', style: TextStyle( fontSize: 17.0, fontWeight: FontWeight.bold ) ),
+          Text( 'Temperatura (5 días)', style: TextStyle( fontSize: 15.0, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor ) ),
           Expanded(
             child: GraficaLinear(_dataGraficoPreddicciones5Dias)
           ),
@@ -207,7 +207,7 @@ class _GraficaPrediccion3Meses extends StatelessWidget {
       margin: EdgeInsets.symmetric( horizontal: 10 ),
       child: Column(
         children: <Widget>[
-          Text( 'Temperatura (3 meses)', style: TextStyle( fontSize: 17.0, fontWeight: FontWeight.bold ) ),
+          Text( 'Temperatura (3 meses)', style: TextStyle( fontSize: 15.0, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor ) ),
           Expanded(
             child: GraficaLinear(_dataGraficoPreddicciones3Meses)
           ),
@@ -266,10 +266,10 @@ class _ControlCultivoCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Edad: ${ controlCultivo.edadPlanta }'),
+            Text('Edad: ${ controlCultivo.edadPlanta } semana(s)'),
             Text('Número de hojas: ${ controlCultivo.numeroHojas }'),
-            Text('Altura: ${ controlCultivo.altura }'),
-            Text('Diámetro Pella: ${ controlCultivo.diametroPella }'),
+            Text('Altura: ${ controlCultivo.altura }cm'),
+            Text('Diámetro Pella: ${ controlCultivo.diametroPella }cm'),
             Text('Color de hoja: ${ controlCultivo.color }'),
           ],
         ),
